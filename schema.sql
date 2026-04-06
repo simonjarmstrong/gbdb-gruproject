@@ -49,6 +49,7 @@ CREATE TABLE Enrollment (
     enrollment_id INT AUTO_INCREMENT PRIMARY KEY,
     student_id    INT NOT NULL,
     course_id     INT NOT NULL,
+        enrollment_date DATE DEFAULT (CURRENT_DATE),
     CONSTRAINT fk_enrollment_student
         FOREIGN KEY (student_id) REFERENCES Student(student_id),
     CONSTRAINT fk_enrollment_course
@@ -72,6 +73,9 @@ CREATE TABLE Assignment (
     category_id   INT          NOT NULL,
     title         VARCHAR(100) NOT NULL,
     description   TEXT,
+        max_score       DECIMAL(5,2) NOT NULL DEFAULT 100.00,
+        due_date        DATE,
+        assigned_date   DATE,
     CONSTRAINT fk_assignment_course
         FOREIGN KEY (course_id) REFERENCES Course(course_id),
     CONSTRAINT fk_assignment_category
@@ -85,6 +89,7 @@ CREATE TABLE Grade (
     assignment_id INT          NOT NULL,
     score         DECIMAL(5,2) NOT NULL,
     comments      TEXT,
+        graded_date     DATETIME DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_grade_student
         FOREIGN KEY (student_id) REFERENCES Student(student_id),
     CONSTRAINT fk_grade_assignment
